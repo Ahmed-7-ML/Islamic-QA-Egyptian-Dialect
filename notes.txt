@@ -1,0 +1,39 @@
+----------------
+- uv pip install livekit-agents livekit-plugins-openai livekit-plugins-deepgram livekit-plugins-cartesia livekit-plugins-silero
+- ngrok config add-authtoken 38koTaOPOjuAX4AOLinqtMv2Lf8_2PCBgaAgRwvCHptrPsLwy
+- uv pip compile pyproject.toml -o requirements.txt
+- uv pip freeze > requirements.txt
+- winget install LiveKit.LiveKitCLI
+----------------
+
+----------------
+- wsl --install
+- wsl
+- pip install vllm
+- vllm serve A7med-Ame3/qwen3_merged_model --port 8000 --trust-remote-code
+----------------
+
+----------------
+- ngrok http 8000
+----------------
+
+----------------
+- lk cloud auth
+- lk agent create
+- lk agent update
+- lk agent logs
+- lk agent deploy
+----------------
+
+
+--- Links ---
+[OpenAI] https://platform.openai.com/api-keys
+[Cartesia] https://play.cartesia.ai/keys
+[Cartesia VoiceID] https://play.cartesia.ai/voices?language=ar&accent=Modern+Standard+Arabic&tags=
+[DeepGram] https://console.deepgram.com/project/3e0752f8-2c66-4c0d-83d1-ae2ef357fae5/keys
+[vLLM]
+- https://www.youtube.com/watch?v=q5IF2PHA5SA
+
+[Livekit]
+- https://www.youtube.com/watch?v=eMaLOQbj4GE&t=105s
+- https://cloud.livekit.io/projects/p_k39zkgyiyow/overview
