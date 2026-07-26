@@ -1,5 +1,5 @@
 """
-Task 5: Launch vLLM as an OpenAI-Compatible API Server
+Launch vLLM as an OpenAI-Compatible API Server
 Serve A7med-Ame3/Qwen2.5-7B-LiveKit-16bit via HTTP and interact using the OpenAI Python client.
 """
 
@@ -108,13 +108,10 @@ def main():
 
     from openai import OpenAI
 
-    # TODO 1: Configure the OpenAI client to point to the local vLLM server
-    # Hint: Point the client to the local vLLM server URL
-    # TODO: Set to "http://localhost:8000/v1" and "not-needed"
+    # Configure the OpenAI client to point to the local vLLM server
     client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")
 
-    # TODO 2: Send a completion request
-    # Hint: Use the model_name variable
+    # Send a completion request
     start_time = time.time()
     response = client.completions.create(
         model=model_name,  # TODO: Set to model_name
@@ -128,7 +125,7 @@ def main():
     response_text = response.choices[0].text
     latency = end_time - start_time
 
-    # --- RESPONSE ---
+    # ---> RESPONSE
     print(f"\n--- RESPONSE ---")
     print(f"Model: {response.model}")
     print(f"Response: {response_text[:200]}")
@@ -138,13 +135,13 @@ def main():
         print(f"Prompt tokens: {response.usage.prompt_tokens}")
         print(f"Completion tokens: {response.usage.completion_tokens}")
 
-    # --- API DETAILS ---
+    # ---> API DETAILS
     print(f"\n--- API DETAILS ---")
     print(f"Endpoint: {server_url}/v1/completions")
     print(f"Format: OpenAI-compatible (drop-in replacement)")
     print(f"Auth: No API key needed (local server)")
 
-    # --- KEY INSIGHT ---
+    # ---> KEY INSIGHT
     print("\n" + "=" * 65)
     print("KEY INSIGHT:")
     print("- vLLM serves an OpenAI-compatible API out of the box")

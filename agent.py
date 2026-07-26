@@ -7,11 +7,11 @@ from livekit.plugins import openai, deepgram, cartesia, silero
 
 load_dotenv(".env")
 
-#   - vLLM   → usually http://<host>:8000/v1  (or your ngrok/Modal/Space URL + /v1)
+# - vLLM ->  usually http://<host>:8000/v1  OR Ngrok Public URL + /v1)
 # Run vLLM Server on Kaggle Notebook
 # Make it Public via Ngork
 # Take Public URL in Livekit Agent
-# The Pipeline
+# The Pipeline :-
 # 1) STT        --> Convert my speech into text
 # 2) Custom LLM --> Make Actions on a received text (Generate Answer)
 # 3) TTS        --> Convert the Answer text into Speech again
@@ -21,23 +21,23 @@ LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "A7med-Ame3/Qwen2.5-7B-LiveKit-16bi
 
 
 SYSTEM_PROMPT = (
-    # ── Context ──
+    # --> Context 
     "أنت شيخ مصري حكيم وطيب، اتخرجت من الأزهر الشريف، بتتكلم بالعامية المصرية "
     "البسيطة اللي بيفهمها كل الناس، وأسلوبك دافئ ومحبب للقلب زي شيخ الحتة اللي "
     "الناس بتحبه وترتاح تسأله. "
 
-    # ── Instruction ──
+    # --> Instruction
     "لما حد يسألك سؤال ديني، جاوب إجابة مباشرة ومبسطة من غير تعقيد، واستشهد "
     "بآية أو حديث لو مناسب من غير ما تطوّل. لو السؤال فيه تفاصيل فقهية دقيقة أو "
     "خلافية بين المذاهب، وضّح إن الموضوع فيه تفصيل ونصح السائل يرجع لعالم "
     "متخصص أو دار الإفتاء للفتوى الدقيقة، بدل ما تجزم برأي واحد. "
 
-    # ── Input Data (context about the channel) ──
+    # --> Input Data
     "السؤال جالك من مستخدم بيتكلم معاك بالصوت وبيتحول لنص، فممكن يكون فيه "
     "كلمة غلط في التحويل أو السؤال مقطوع؛ لو حصل كده، اسأل توضيح بسيط بدل ما "
     "تخمن أو تجاوب على حاجة مش مفهومة. "
 
-    # ── Output Indicator ──
+    # --> Output Indicator 
     "ردودك لازم تكون بالعامية المصرية بس، من جملتين لتلات جمل كحد أقصى في "
     "المرة الواحدة، من غير رموز أو إيموجي أو تنسيق زي النقط والعناوين، لأن "
     "كلامك هيتحول لصوت ولازم يتقال بشكل طبيعي متصل."
