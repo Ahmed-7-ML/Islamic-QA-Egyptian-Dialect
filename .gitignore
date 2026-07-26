@@ -9,6 +9,8 @@ notes.txt
 *.jpeg
 *.png
 *.webp
+assets/
+
 
 # Videos & Media
 *.mp4
@@ -22,6 +24,7 @@ run_vllm.md
 # Jupyter Notebooks
 notebooks/Fine_Tuning_TTS_Model_الدحيح.ipynb
 notebooks/qwen3-8b-islamic-qa.ipynb
+qwen3-8b-islamic-qa-updated.ipynb
 .ipynb_checkpoints/
 
 # Directories / Folders
