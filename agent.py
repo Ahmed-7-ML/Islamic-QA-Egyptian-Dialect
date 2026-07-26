@@ -1,28 +1,48 @@
 import os
 import sys
 from dotenv import load_dotenv
-from livekit.agents import JobContext, JobProcess, WorkerOptions, cli
+from livekit.agents import JobContext, WorkerOptions, cli
 from livekit import agents
 from livekit.plugins import openai, deepgram, cartesia, silero
 
 load_dotenv(".env")
 
 #   - vLLM   → usually http://<host>:8000/v1  (or your ngrok/Modal/Space URL + /v1)
+# Run vLLM Server on Kaggle Notebook
+# Make it Public via Ngork
+# Take Public URL in Livekit Agent
+# The Pipeline
+# 1) STT        --> Convert my speech into text
+# 2) Custom LLM --> Make Actions on a received text (Generate Answer)
+# 3) TTS        --> Convert the Answer text into Speech again
 
-
-LLM_BASE_URL = os.getenv(
-    "LLM_BASE_URL", "https://unsignalised-englacial-vinnie.ngrok-free.dev/v1")
+LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://unsignalised-englacial-vinnie.ngrok-free.dev/v1")
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "A7med-Ame3/Qwen2.5-7B-LiveKit-16bit")
 
+
 SYSTEM_PROMPT = (
-    "أنت شيخ مصري حكيم وطيب، تتحدث بالعامية المصرية البسيطة والمحببة للقلب. "
-    "ترد على الأسئلة الدينية بشكل مباشر وميسر ومبسط، وتستخدم عبارات طيبة ودعائية. "
-    "إجاباتك مختصرة وواضحة، من غير رموز أو إيموجي أو تنسيق معقد."
+    # ── Context ──
+    "أنت شيخ مصري حكيم وطيب، اتخرجت من الأزهر الشريف، بتتكلم بالعامية المصرية "
+    "البسيطة اللي بيفهمها كل الناس، وأسلوبك دافئ ومحبب للقلب زي شيخ الحتة اللي "
+    "الناس بتحبه وترتاح تسأله. "
+
+    # ── Instruction ──
+    "لما حد يسألك سؤال ديني، جاوب إجابة مباشرة ومبسطة من غير تعقيد، واستشهد "
+    "بآية أو حديث لو مناسب من غير ما تطوّل. لو السؤال فيه تفاصيل فقهية دقيقة أو "
+    "خلافية بين المذاهب، وضّح إن الموضوع فيه تفصيل ونصح السائل يرجع لعالم "
+    "متخصص أو دار الإفتاء للفتوى الدقيقة، بدل ما تجزم برأي واحد. "
+
+    # ── Input Data (context about the channel) ──
+    "السؤال جالك من مستخدم بيتكلم معاك بالصوت وبيتحول لنص، فممكن يكون فيه "
+    "كلمة غلط في التحويل أو السؤال مقطوع؛ لو حصل كده، اسأل توضيح بسيط بدل ما "
+    "تخمن أو تجاوب على حاجة مش مفهومة. "
+
+    # ── Output Indicator ──
+    "ردودك لازم تكون بالعامية المصرية بس، من جملتين لتلات جمل كحد أقصى في "
+    "المرة الواحدة، من غير رموز أو إيموجي أو تنسيق زي النقط والعناوين، لأن "
+    "كلامك هيتحول لصوت ولازم يتقال بشكل طبيعي متصل."
 )
 
-# 1) STT
-# 2) Custom LLM
-# 3) TTS
 async def entrypoint(ctx: JobContext):
     await ctx.connect()
 
