@@ -6,6 +6,6 @@ notes.txt
 run_vllm.md
 *.pptx
 2026-07-26 04-18-11.mp4
-Fine_Tuning_TTS_Model_الدحيح.ipynb
-qwen3-8b-islamic-qa.ipynb
+notebooks/Fine_Tuning_TTS_Model_الدحيح.ipynb
+notebooks/qwen3-8b-islamic-qa.ipynb
 vllm-guide/
