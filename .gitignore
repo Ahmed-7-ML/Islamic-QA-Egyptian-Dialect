@@ -1,11 +1,35 @@
+# Environment & Secrets
 .env
+
+# Notes & Text
 notes.txt
+
+# Images
 *.jpg
+*.jpeg
 *.png
-*webp
-run_vllm.md
+*.webp
+
+# Videos & Media
+*.mp4
+
+# Presentation Files
 *.pptx
-2026-07-26 04-18-11.mp4
+
+# Guides & Docs
+run_vllm.md
+
+# Jupyter Notebooks
 notebooks/Fine_Tuning_TTS_Model_الدحيح.ipynb
 notebooks/qwen3-8b-islamic-qa.ipynb
+# لو حابب تتجاهل كل الـ Checkpoints بتاعة Jupyter
+.ipynb_checkpoints/
+
+# Directories / Folders
 vllm-guide/
+
+# OS / Editor generated files (مستحسن تزويدهم)
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
