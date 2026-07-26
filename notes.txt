@@ -4,13 +4,29 @@
 - uv pip compile pyproject.toml -o requirements.txt
 - uv pip freeze > requirements.txt
 - winget install LiveKit.LiveKitCLI
+- uv cache clean
 ----------------
 
+[ Windows ]
+   └── [ WSL / Ubuntu ]  <-- نظام التشغيل
+          └── [ Conda Environment: vllm_env (Python 3.10) ]  <-- البيئة المعزولة
+                 └── [ vLLM & PyTorch ]  <-- المكتبات (تم تثبيتها بواسطة uv)
+
 ----------------
-- wsl --install
-- wsl
-- pip install vllm
-- vllm serve A7med-Ame3/qwen3_merged_model --port 8000 --trust-remote-code
+vLLM Inference
+1- wsl --install
+2- wsl -l -v
+3- wsl
+4- wsl -d Ubuntu
+5- sudo apt update && sudo apt install -y python3-pip python3-venv build-essential
+6- python3 -m venv .venv_wsl
+7- source .venv_wsl/bin/activate
+8- pip install --upgrade pip
+9- pip install uv
+9- uv pip install vllm
+10- conda create -n vllm_env python=3.10 -y
+11- conda activate vllm_env
+10- vllm serve A7med-Ame3/Qwen2.5-7B-LiveKit-16bit --port 8000
 ----------------
 
 ----------------
@@ -26,7 +42,7 @@
 ----------------
 
 
---- Links ---
+------------------------- Links -------------------------
 [OpenAI] https://platform.openai.com/api-keys
 [Cartesia] https://play.cartesia.ai/keys
 [Cartesia VoiceID] https://play.cartesia.ai/voices?language=ar&accent=Modern+Standard+Arabic&tags=
@@ -37,3 +53,13 @@
 [Livekit]
 - https://www.youtube.com/watch?v=eMaLOQbj4GE&t=105s
 - https://cloud.livekit.io/projects/p_k39zkgyiyow/overview
+
+---------------------------------------------------------------------
+Inference Engines:
+1) Llama.cpp       --> Optimized for CPU/RAM, great for local use
+2) vLLM            --> High throughput, great for serving multiple users
+3) SGLang          --> Fast structured generation
+4) Tensor-RT       --> Optimized for NVIDIA GPUs
+5) HuggingFace TGI --> Simple deployment
+
+--> Different inference engines produce different speeds for the same model

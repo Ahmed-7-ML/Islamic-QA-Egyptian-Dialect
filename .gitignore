@@ -1,1 +1,7 @@
 .env
+notes.txt
+*.jpg
+*.png
+*webp
+run_vllm.md
+*.pptx

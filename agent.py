@@ -8,11 +8,11 @@ from livekit.plugins import openai, deepgram, cartesia, silero
 load_dotenv(".env")
 
 #   - vLLM   → usually http://<host>:8000/v1  (or your ngrok/Modal/Space URL + /v1)
-#   - llama.cpp server → usually http://<host>:8001/v1
 
-LLM_BASE_URL = os.getenv("LLM_BASE_URL", "http://localhost:8000/v1")
-LLM_MODEL_NAME = os.getenv(
-    "LLM_MODEL_NAME", "A7med-Ame3/Qwen2.5-7B-LiveKit-16bit")
+
+LLM_BASE_URL = os.getenv(
+    "LLM_BASE_URL", "https://unsignalised-englacial-vinnie.ngrok-free.dev/v1")
+LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "A7med-Ame3/Qwen2.5-7B-LiveKit-16bit")
 
 SYSTEM_PROMPT = (
     "أنت شيخ مصري حكيم وطيب، تتحدث بالعامية المصرية البسيطة والمحببة للقلب. "
@@ -23,8 +23,6 @@ SYSTEM_PROMPT = (
 # 1) STT
 # 2) Custom LLM
 # 3) TTS
-
-
 async def entrypoint(ctx: JobContext):
     await ctx.connect()
 
