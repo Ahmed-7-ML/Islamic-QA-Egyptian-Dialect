@@ -1,8 +1,7 @@
 # Environment & Secrets
 .env
-
-# Notes & Text
-notes.txt
+.venv
+myenv
 
 # Videos & Media
 *.mp4
@@ -12,6 +11,8 @@ notes.txt
 
 # Guides & Docs
 run_vllm.md
+guide/
+notes.txt
 
 # Jupyter Notebooks
 notebooks/Fine_Tuning_TTS_Model_الدحيح.ipynb
@@ -19,7 +20,6 @@ notebooks/qwen3-8b-islamic-qa.ipynb
 qwen3-8b-islamic-qa-updated.ipynb
 .ipynb_checkpoints/
 
-# Directories / Folders
 vllm-guide/
 
 # OS / Editor generated files (مستحسن تزويدهم)
@@ -28,5 +28,4 @@ Thumbs.db
 __pycache__/
 *.pyc
 
-run_llama_cpp.md
-README.md
+llama_inference.py
