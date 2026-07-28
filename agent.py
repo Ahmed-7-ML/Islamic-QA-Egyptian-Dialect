@@ -11,6 +11,8 @@ load_dotenv(".env")
 # Run vLLM Server on Kaggle Notebook
 # Make it Public via Ngork
 # Take Public URL in Livekit Agent
+
+# - llama.cpp -> 
 # The Pipeline :-
 # 1) STT        --> Convert my speech into text
 # 2) Custom LLM --> Make Actions on a received text (Generate Answer)
@@ -18,7 +20,7 @@ load_dotenv(".env")
 
 LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://unsignalised-englacial-vinnie.ngrok-free.dev/v1")
 LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "A7med-Ame3/Qwen2.5-7B-LiveKit-16bit")
-
+# LLM_MODEL_NAME = os.getenv("LLM_MODEL_NAME", "Qwen2.5-7B-LiveKit-16bit.Q4_K_M.gguf")
 
 SYSTEM_PROMPT = (
     # --> Context 
@@ -72,7 +74,7 @@ async def entrypoint(ctx: JobContext):
     await session.start(room=ctx.room, agent=agent)
 
     await session.say(
-        "أهلاً بك! أنا هنا عشان أساعدك في أي سؤال ديني، اتفضل اسأل.",
+        "اهلا بيك اخى العزيز,اسمك ايه و اقدر اساعدك ازاى ؟ ",
         allow_interruptions=True,
     )
 

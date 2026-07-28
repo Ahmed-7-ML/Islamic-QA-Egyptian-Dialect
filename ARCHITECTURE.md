@@ -7,6 +7,7 @@
 | 🎥 Live Demo             | [Watch on Google Drive](https://drive.google.com/file/d/1BRYskrCp0Qf4y649rONq1XTpNDMA57-9/view?usp=sharing) |
 | 🔧 LoRA Adapter          | [A7med-Ame3/qwen2.5_lora_model](https://huggingface.co/A7med-Ame3/qwen2.5_lora_model)                       |
 | 🧩 Merged Model (16-bit) | [A7med-Ame3/Qwen2.5-7B-LiveKit-16bit](https://huggingface.co/A7med-Ame3/Qwen2.5-7B-LiveKit-16bit)           |
+| GGUF Model               | [huggingface.co/A7med-Ame3/Qwen2.5-7B-GGUF](https://huggingface.co/A7med-Ame3/Qwen2.5-7B-GGUF)              |
 | 📊 Updated Dataset       | [A7med-Ame3/islamic-qa-egyptian](https://huggingface.co/datasets/A7med-Ame3/islamic-qa-egyptian)            |
 
 ---
@@ -82,10 +83,11 @@ Each training example was tagged with a heuristic intent category (`aqeedah`, `f
 
 ### Deployment Artifacts Produced
 
-| Artifact            | Purpose                               | Location                                                                                         |
-| ------------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| LoRA adapters       | Lightweight, shareable fine-tune      | [A7med-Ame3/qwen2.5_lora_model](https://huggingface.co/A7med-Ame3/qwen2.5_lora_model)             |
-| Merged 16-bit model | Full-precision model for vLLM serving | [A7med-Ame3/Qwen2.5-7B-LiveKit-16bit](https://huggingface.co/A7med-Ame3/Qwen2.5-7B-LiveKit-16bit) |
+| Artifact            | Purpose                                     | Location                                                                                         |
+| ------------------- | ------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| LoRA adapters       | Lightweight, shareable fine-tune            | [A7med-Ame3/qwen2.5_lora_model](https://huggingface.co/A7med-Ame3/qwen2.5_lora_model)             |
+| Merged 16-bit model | Full-precision model for vLLM serving       | [A7med-Ame3/Qwen2.5-7B-LiveKit-16bit](https://huggingface.co/A7med-Ame3/Qwen2.5-7B-LiveKit-16bit) |
+| GGUF Model          | 4-bit Quantized Model for Llama.cpp serving | [huggingface.co/A7med-Ame3/Qwen2.5-7B-GGUF](https://huggingface.co/A7med-Ame3/Qwen2.5-7B-GGUF)    |
 
 All published artifacts are visible on the model author's Hugging Face profile:
 
@@ -110,6 +112,7 @@ All published artifacts are visible on the model author's Hugging Face profile:
 ### Why 4-bit quantization during training?
 
 - **4-bit (LoRA) during training**: Loading the base model in 4-bit precision (`load_in_4bit=True`) reduces the memory footprint of the frozen base weights during fine-tuning, allowing a 7B-parameter model to train on GPUs with limited VRAM — the constraint driving nearly every infrastructure decision in this project. LoRA adapters themselves are trained in higher precision, so this does not meaningfully degrade adaptation quality.
+- **q4_k_m for GGUF export** : Among Unsloth's supported quantization methods (`q8_0`, `q4_k_m`, `q5_k_m`), `q4_k_m` was selected as the recommended balance point — it keeps higher precision (Q6_K) for the attention output and half of the feed-forward weights (the layers most sensitive to quality loss) while using more aggressive Q4_K quantization elsewhere, giving a substantially smaller file size and faster CPU/edge inference than `q8_0` with comparatively minor quality trade-off, which matters directly for the "low-latency production deployment" requirement of this task.
 
 ---
 
@@ -135,11 +138,11 @@ Unlike an earlier single-prompt pilot, this result averages TTFT, TPS, output le
 
 | Metric                     | Base Model (`Qwen2.5-7B-Instruct`) | Fine-Tuned Model | Change                            |
 | -------------------------- | ------------------------------------ | ---------------- | --------------------------------- |
-| TTFT (sec)                 | 0.29                                 | 0.39             | ~34%**slower**              |
-| Total Inference Time (sec) | 12.75                                | 7.68             | ~40% faster                       |
-| Output Tokens              | 189.6                                | 112.3            | ~41% shorter                      |
-| TPS (tok/sec)              | 14.89                                | 14.58            | ~2% lower (essentially unchanged) |
-| Peak VRAM (MB)             | 14,156.96                            | 14,168.06        | ~0.08% higher (negligible)        |
+| TTFT (sec)                 | **0.29**                            | 0.39             | ~34%**slower**              |
+| Total Inference Time (sec) | 12.75                                | **7.68**        | ~40% faster                       |
+| Output Tokens              | 189.6                                | **112.3**       | ~41% shorter                      |
+| TPS (tok/sec)              | 14.89                                | **14.58**       | ~2% lower (essentially unchanged) |
+| Peak VRAM (MB)             | 14,156.96                            | **14,168.06**   | ~0.08% higher (negligible)        |
 
 ---
 
