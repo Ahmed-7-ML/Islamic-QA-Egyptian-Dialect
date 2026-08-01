@@ -22,11 +22,10 @@ qwen3-8b-islamic-qa-updated.ipynb
 
 vllm-guide/
 
-# OS / Editor generated files (مستحسن تزويدهم)
+# OS / Editor generated files
 .DS_Store
 Thumbs.db
 __pycache__/
 *.pyc
 
 llama_inference.py
-README.md
