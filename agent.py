@@ -63,6 +63,7 @@ async def entrypoint(ctx: JobContext):
             language="ar",
         ),
         llm=llm,
+        # Try ElevenLabs with Egyptian Voice 
         tts=cartesia.TTS(
             model="sonic-3",
             language="ar",
@@ -77,7 +78,6 @@ async def entrypoint(ctx: JobContext):
         "اهلا بيك اخى العزيز,اسمك ايه و اقدر اساعدك ازاى ؟ ",
         allow_interruptions=True,
     )
-
 
 if __name__ == "__main__":
     sys.argv = ["agent.py", "dev"]
